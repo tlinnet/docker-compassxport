@@ -1,10 +1,11 @@
-FROM suchja/wine:dev
+#FROM suchja/wine:dev
+FROM suchja/wine:latest
 
 MAINTAINER PhenoMeNal-H2020 Project ( phenomenal-h2020-users@googlegroups.com )
 
 # Install CompassXport
 # https://www.bruker.com/de/service/support-upgrades/software-downloads/mass-spectrometry.html
-COPY CompassXport_3.0.9.2_Setup.exe /tmp
+COPY CompassXport_3.0.13.1_Setup.exe /tmp
 
 # unfortunately we later need to wait on wineserver.
 # Thus a small script for waiting is supplied.
@@ -54,7 +55,7 @@ RUN wine wineboot --init \
 # Install CompassXport
 RUN wine wineboot --init \
 		&& /scripts/waitonprocess.sh wineserver \
-		&& /usr/bin/xvfb-run wine "/tmp/CompassXport_3.0.9.2_Setup.exe" /S /v/qn \
+		&& /usr/bin/xvfb-run wine "/tmp/CompassXport_3.0.13.1_Setup.exe" /S /v/qn \
 		&& /scripts/waitonprocess.sh wineserver
 
 # Unless copied, this DLL will not be found by CompassXport.exe
